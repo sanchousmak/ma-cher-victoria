@@ -107,7 +107,9 @@
   transition: transform .6s cubic-bezier(.25, 1, .5, 1), box-shadow .6s ease;
 }
 
-.hang-media img {
+.hang-media img,
+.hang-ghost img
+{
   width: 100%;
   display: block;
   transition: transform .9s cubic-bezier(.25, 1, .5, 1);
@@ -370,11 +372,35 @@
 }
 
 @media (max-width: 620px) {
-  /* На телефоне экспозиция становится вертикальной: одна работа — одна пауза */
-  .hang, .hang.is-s, .hang.is-l { grid-column: span 12; }
+  /* На телефоне экспозиция укладывается в две колонки */
+  .hang, .hang.is-s, .hang.is-l { grid-column: span 6; }
   .wall > .hang:nth-child(even) { margin-top: 0; }
-  .wall { gap: clamp(44px, 9vw, 64px) 0; }
-  .hang-label { flex-wrap: wrap; }
+  .wall {
+    align-items: start;
+    grid-auto-rows: max-content;
+  }
+  .wall { gap: clamp(44px, 9vw, 64px) clamp(12px, 4vw, 20px); }
+  .hang-label {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .hang-index {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .hang-title {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    flex: none;
+    font-size: clamp(15px, 4.5vw, 18px);
+  }
+  .hang-price {
+    grid-column: 3;
+    grid-row: 1;
+  }
 }
 
 /* Текст о работе в развороте */

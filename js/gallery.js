@@ -3,21 +3,21 @@
 // ==========================================================================
 const gallery = {
   painting: [
-    { image: 'catalog/work-1.webp', title: 'Утро в Юрмале', year: 2024, material: 'Холст, масло', size: '60×80' },
-    { image: 'catalog/work-2.webp', title: 'Окно',          year: 2024, material: 'Холст, масло', size: '40×50' },
-    { image: 'catalog/work-3.webp', title: 'Сирень',        year: 2023, material: 'Холст, масло', size: '50×70' },
-    { image: 'catalog/work-4.webp', title: 'Тишина',        year: 2023, material: 'Холст, масло', size: '40×40' }
+    { image: '../catalog/work-1.webp', title: { ru: 'Утро в Юрмале', en: 'Morning in Jurmala' }, year: 2024, material: { ru: 'Холст, масло', en: 'Oil on canvas' }, size: '60×80' },
+    { image: '../catalog/work-2.webp', title: { ru: 'Окно',          en: 'Window' },             year: 2024, material: { ru: 'Холст, масло', en: 'Oil on canvas' }, size: '40×50' },
+    { image: '../catalog/work-3.webp', title: { ru: 'Сирень',        en: 'Lilac' },              year: 2023, material: { ru: 'Холст, масло', en: 'Oil on canvas' }, size: '50×70' },
+    { image: '../catalog/work-4.webp', title: { ru: 'Тишина',        en: 'Silence' },            year: 2023, material: { ru: 'Холст, масло', en: 'Oil on canvas' }, size: '40×40' }
   ],
   graphics: [
-    { image: 'catalog/work-5.webp', title: 'Набросок I',  year: 2025, material: 'Бумага, тушь',  size: '21×30' },
-    { image: 'catalog/work-6.webp', title: 'Набросок II', year: 2025, material: 'Бумага, тушь',  size: '21×30' },
-    { image: 'catalog/work-7.webp', title: 'Профиль',     year: 2024, material: 'Бумага, уголь', size: '30×40' }
+    { image: '../catalog/work-5.webp', title: { ru: 'Набросок I',  en: 'Sketch I' },  year: 2025, material: { ru: 'Бумага, тушь',  en: 'Ink on paper' },     size: '21×30' },
+    { image: '../catalog/work-6.webp', title: { ru: 'Набросок II', en: 'Sketch II' }, year: 2025, material: { ru: 'Бумага, тушь',  en: 'Ink on paper' },     size: '21×30' },
+    { image: '../catalog/work-7.webp', title: { ru: 'Профиль',     en: 'Profile' },   year: 2024, material: { ru: 'Бумага, уголь', en: 'Charcoal on paper' }, size: '30×40' }
   ],
   illustration: [
-    { image: 'catalog/work-8.webp',  title: 'Кофейня',  year: 2025, material: 'Цифровая печать', size: 'A3' },
-    { image: 'catalog/work-9.webp',  title: 'Прогулка', year: 2025, material: 'Цифровая печать', size: 'A3' },
-    { image: 'catalog/work-10.webp', title: 'Двор',     year: 2024, material: 'Акварель',        size: '30×40' },
-    { image: 'catalog/work-11.webp', title: 'Вечер',    year: 2024, material: 'Акварель',        size: '30×40' }
+    { image: '../catalog/work-8.webp',  title: { ru: 'Кофейня',  en: 'Café' },      year: 2025, material: { ru: 'Цифровая печать', en: 'Digital print' }, size: 'A3' },
+    { image: '../catalog/work-9.webp',  title: { ru: 'Прогулка', en: 'Walk' },      year: 2025, material: { ru: 'Цифровая печать', en: 'Digital print' }, size: 'A3' },
+    { image: '../catalog/work-10.webp', title: { ru: 'Двор',     en: 'Courtyard' }, year: 2024, material: { ru: 'Акварель',        en: 'Watercolour' },  size: '30×40' },
+    { image: '../catalog/work-11.webp', title: { ru: 'Вечер',    en: 'Evening' },   year: 2024, material: { ru: 'Акварель',        en: 'Watercolour' },  size: '30×40' }
   ]
 };
 
@@ -37,72 +37,72 @@ const gallery = {
 const shop = [
   {
     id: 'orig-yurmala',
-    title: 'Утро в Юрмале',
-    image: 'catalog/work-1.webp',
-    detail: 'catalog/work-1.webp',
+    title: { ru: 'Утро в Юрмале', en: 'Morning in Jurmala' },
+    image: '../catalog/work-1.webp',
+    detail: '../catalog/work-1.webp',
     kind: 'original',
-    type: 'Оригинал',
+    type: { ru: 'Оригинал', en: 'Original' },
     ratio: '4/5',
     scale: 'l',
     year: 2024,
-    material: 'Холст, масло',
-    size: '60×80 см',
+    material: { ru: 'Холст, масло', en: 'Oil on canvas' },
+    size: { ru: '60×80 см', en: '60×80 cm' },
     price: 850,
-    about: 'Писалось три недели утром, пока свет ещё холодный.'
+    about: { ru: 'Писалось три недели утром, пока свет ещё холодный.', en: 'Painted over three weeks, in the mornings while the light was still cool.' }
   },
   {
     id: 'orig-window',
-    title: 'Окно',
-    image: 'catalog/work-2.webp',
+    title: { ru: 'Окно', en: 'Window' },
+    image: '../catalog/work-2.webp',
     kind: 'original',
-    type: 'Оригинал',
+    type: { ru: 'Оригинал', en: 'Original' },
     ratio: '4/5',
     scale: 'm',
     year: 2024,
-    material: 'Холст, масло',
-    size: '40×50 см',
+    material: { ru: 'Холст, масло', en: 'Oil on canvas' },
+    size: { ru: '40×50 см', en: '40×50 cm' },
     price: 620,
     status: 'sold',
-    collection: 'Частная коллекция, Стамбул'
+    collection: { ru: 'Частная коллекция, Стамбул', en: 'Private collection, Istanbul' }
   },
   {
     id: 'orig-silence',
-    title: 'Тишина',
-    image: 'catalog/work-4.webp',
+    title: { ru: 'Тишина', en: 'Silence' },
+    image: '../catalog/work-4.webp',
     kind: 'original',
-    type: 'Оригинал',
+    type: { ru: 'Оригинал', en: 'Original' },
     ratio: '1/1',
     scale: 's',
     year: 2023,
-    material: 'Холст, масло',
-    size: '40×40 см',
+    material: { ru: 'Холст, масло', en: 'Oil on canvas' },
+    size: { ru: '40×40 см', en: '40×40 cm' },
     price: 480,
     status: 'sold',
-    collection: 'Частная коллекция, Рига'
+    collection: { ru: 'Частная коллекция, Рига', en: 'Private collection, Riga' }
   },
   {
     id: 'print-yurmala-a3',
-    title: 'Утро в Юрмале',
-    image: 'catalog/work-1.webp',
+    title: { ru: 'Утро в Юрмале', en: 'Morning in Jurmala' },
+    image: '../catalog/work-1.webp',
     kind: 'print',
-    type: 'Принт, тираж 25',
+    type: { ru: 'Принт, тираж 25', en: 'Print, edition of 25' },
     ratio: '4/5',
     scale: 'm',
     year: 2025,
-    material: 'Giclée, хлопковая бумага',
+    material: { ru: 'Giclée, хлопковая бумага', en: 'Giclée, cotton paper' },
     size: 'A3',
     price: 90
   },
   {
     id: 'print-sketch-a4',
-    title: 'Набросок I',
-    image: 'catalog/work-5.webp',
+    title: { ru: 'Набросок I', en: 'Sketch I' },
+    image: '../catalog/work-5.webp',
     kind: 'print',
-    type: 'Принт, тираж 50',
+    type: { ru: 'Принт, тираж 50', en: 'Print, edition of 50' },
     ratio: '3/4',
     scale: 's',
     year: 2025,
-    material: 'Giclée',
+    material: { ru: 'Giclée', en: 'Giclée' },
     size: 'A4',
     price: 55
   }

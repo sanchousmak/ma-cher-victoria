@@ -4,6 +4,14 @@
 const SHOP_EMAIL = 'victtoress@mail.com';   // ← сюда приходят заказы
 const CURRENCY = '₽';
 const CART_KEY = 'mcv-cart';             // ключ хранения корзины
+const CART_BADGE_POSITION = 'top-right';  // 'top-right' | 'bottom-right'
+const i18n = window.mcvI18n || {
+  t: (path) => path,
+  value: (entry) => (entry && typeof entry === 'object' ? (entry.ru ?? entry.en ?? '') : (entry ?? '')),
+  money: (amount) => `${Number(amount || 0).toLocaleString('ru-RU')} ${CURRENCY}`
+};
+const t = (path, replacements) => i18n.t(path, replacements);
+const value = (entry) => i18n.value(entry);
 
 // ==========================================================================
 // 1. УТИЛИТЫ
@@ -11,9 +19,14 @@ const CART_KEY = 'mcv-cart';             // ключ хранения корзи
 const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-const money = (n) => `${Number(n).toLocaleString('ru-RU')} ${CURRENCY}`;
+const money = (n) => i18n.money(n);
 const num = (i) => String(i + 1).padStart(2, '0');
-const caption = (o) => [o.year, o.material, o.size].filter(Boolean).join(' · ');
+const caption = (o) => [value(o.year), value(o.material), value(o.size)].filter(Boolean).join(' · ');
+
+const localized = (item, field, fallback = '') => {
+  const result = value(item?.[field]);
+  return result || fallback;
+};
 
 /**
  * Тег картинки с адаптивными срезами.
@@ -62,7 +75,7 @@ function initNav() {
   const setOpen = (open) => {
     menu.classList.toggle('is-open', open);
     toggle.setAttribute('aria-expanded', String(open));
-    toggle.setAttribute('aria-label', open ? 'Закрыть меню' : 'Открыть меню');
+    toggle.setAttribute('aria-label', open ? t('access.closeMenu') : t('access.openMenu'));
   };
 
   toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
@@ -98,7 +111,7 @@ const ARROW = {
 const CAROUSEL_SIZES = '(max-width: 700px) 82vw, (max-width: 1100px) 45vw, 30vw';
 
 function workMarkup(item, i, eager) {
-  const title = item.title || 'Без названия';
+  const title = localized(item, 'title', t('messages.untitled'));
   const note = esc(caption(item));
 
   return `
@@ -119,18 +132,18 @@ function renderCarousel(root, items, label) {
   if (!root) return;
 
   if (!items?.length) {
-    root.innerHTML = '<p class="state-empty">В этой категории пока пусто.</p>';
+    root.innerHTML = `<p class="state-empty">${esc(t('catalog.empty'))}</p>`;
     return;
   }
 
   root.innerHTML = `
     <div class="carousel">
-      <div class="carousel-track" role="region" aria-label="${esc(label)}" tabindex="0">
+      <div class="carousel-track" role="region" aria-label="${esc(t('catalog.aria'))}" tabindex="0">
         ${items.map((it, i) => `<div class="carousel-slide">${workMarkup(it, i, i < 2)}</div>`).join('')}
       </div>
       <div class="carousel-controls">
-        <button class="carousel-btn" data-dir="-1" aria-label="Предыдущая работа">${ARROW.prev}</button>
-        <button class="carousel-btn" data-dir="1" aria-label="Следующая работа">${ARROW.next}</button>
+        <button class="carousel-btn" data-dir="-1" aria-label="${esc(t('catalog.previous'))}">${ARROW.prev}</button>
+        <button class="carousel-btn" data-dir="1" aria-label="${esc(t('catalog.next'))}">${ARROW.next}</button>
         <span class="carousel-counter" aria-live="polite"></span>
         <span class="carousel-progress"><i></i></span>
       </div>
@@ -194,7 +207,7 @@ function collectItems(filter) {
 }
 
 function renderCatalog(filter = 'all') {
-  renderCarousel(document.getElementById('catalogGrid'), collectItems(filter), 'Серия работ');
+  renderCarousel(document.getElementById('catalogGrid'), collectItems(filter), t('catalog.aria'));
 }
 
 function initFilters(selector, onChange) {
@@ -209,49 +222,8 @@ function initFilters(selector, onChange) {
   }));
 }
 // ==========================================================================
-// РАСКРЫТИЕ СЕРИЙ В МАНИФЕСТЕ
-// Десктоп — по наведению, телефон — по касанию.
-// Разделение по наличию точного указателя, а не по ширине экрана:
-// планшет с мышью получит поведение десктопа.
 // ==========================================================================
 
-(function () {
-  function init() {
-    const items = [...document.querySelectorAll('.series')];
-    if (!items.length) return;
-
-    const hasHover = matchMedia('(hover: hover) and (pointer: fine)').matches;
-
-    items.forEach((series) => {
-      if (hasHover) {
-        series.addEventListener('mouseenter', () => series.classList.add('is-open'));
-        series.addEventListener('mouseleave', () => series.classList.remove('is-open'));
-
-        // Доступность с клавиатуры
-        series.setAttribute('tabindex', '0');
-        series.addEventListener('focus', () => series.classList.add('is-open'));
-        series.addEventListener('blur', () => series.classList.remove('is-open'));
-      } else {
-        // Касание: открываем одну, остальные закрываем
-        series.addEventListener('click', () => {
-          const wasOpen = series.classList.contains('is-open');
-          items.forEach((s) => s.classList.remove('is-open'));
-          if (!wasOpen) series.classList.add('is-open');
-        });
-      }
-    });
-
-    // На телефоне первая серия открыта сразу — иначе неочевидно,
-    // что блок вообще интерактивный
-    if (!hasHover && items[0]) items[0].classList.add('is-open');
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
 // ==========================================================================
 // 5. СТЕНА (магазин)
 // ==========================================================================
@@ -266,13 +238,15 @@ const WALL_SIZES = '(max-width: 700px) 88vw, (max-width: 1100px) 44vw, 30vw';
 
 function hangMarkup(item, i) {
   const sold = item.status === 'sold';
-  const title = item.title || 'Без названия';
-  const meta = esc([item.type, item.size].filter(Boolean).join(' · '));
+  const title = localized(item, 'title', t('messages.untitled'));
+  const meta = esc([localized(item, 'type'), localized(item, 'size')].filter(Boolean).join(' · '));
   const scale = item.scale === 's' || item.scale === 'l' ? ` is-${item.scale}` : '';
   const ratio = ratioOf(item);
 
   const body = sold
-    ? `<div class="hang-ghost" style="aspect-ratio:${esc(ratio)}" aria-hidden="true"></div>`
+    ? `<div class="hang-ghost" style="aspect-ratio:${esc(ratio)}; opacity: 0.05" aria-hidden="true">
+         ${imgTag(item.image, title, { sizes: WALL_SIZES, eager: i < 4, ratio })} 
+      </div>`
     : `<div class="hang-media" style="aspect-ratio:${esc(ratio)}">
          ${imgTag(item.image, title, { sizes: WALL_SIZES, eager: i < 4, ratio })}
        </div>`;
@@ -282,16 +256,16 @@ function hangMarkup(item, i) {
       <span class="hang-index">№${num(i)}</span>
       <span class="hang-title">${esc(title)}
         ${meta ? `<span class="hang-meta">${meta}</span>` : ''}
-        ${sold && item.collection ? `<span class="hang-collection">${esc(item.collection)}</span>` : ''}
+        ${sold && item.collection ? `<span class="hang-collection">${esc(localized(item, 'collection'))}</span>` : ''}
       </span>
-      <span class="hang-price">${sold ? 'Продано' : money(item.price)}</span>
+      <span class="hang-price">${sold ? esc(t('spread.soldIndex')) : money(item.price)}</span>
     </div>`;
 
   // Проданная работа тоже кликабельна: у неё есть своя история
   return `
     <article class="hang${scale}">
       <span class="hang-nail" aria-hidden="true"></span>
-      <button class="hang-frame" data-open="${esc(item.id)}" aria-label="${esc(title)} — подробнее">
+      <button class="hang-frame" data-open="${esc(item.id)}" aria-label="${esc(`${title} — ${t('spread.aria')}`)}">
         ${body}
         ${label}
       </button>
@@ -306,7 +280,7 @@ function renderShop(filter = 'all') {
 
   wall.innerHTML = items.length
     ? items.map(hangMarkup).join('')
-    : '<p class="state-empty">В этой категории пока пусто.</p>';
+    : `<p class="state-empty">${esc(t('catalog.empty'))}</p>`;
 }
 
 // ==========================================================================
@@ -330,32 +304,32 @@ function openSpread(id) {
 
   spread.querySelector('.spread-inner').innerHTML = `
     <div class="spread-main">
-      ${imgTag(item.image, item.title, { eager: true, ratio: ratioOf(item) })}
+      ${imgTag(item.image, localized(item, 'title', t('messages.untitled')), { eager: true, ratio: ratioOf(item) })}
     </div>
 
     <div class="spread-side">
-      <span class="spread-index">№${num(index)}${sold ? ' — продано' : ''}</span>
-      <h2 class="spread-title">${esc(item.title)}</h2>
+      <span class="spread-index">№${num(index)}${sold ? ` — ${esc(t('spread.soldIndex'))}` : ''}</span>
+      <h2 class="spread-title">${esc(localized(item, 'title', t('messages.untitled')))}</h2>
 
       ${item.detail ? `
-        <div class="spread-detail">${imgTag(item.detail, 'Фрагмент работы', { eager: true })}</div>
-        <p class="spread-detail-note">Фрагмент</p>` : ''}
+        <div class="spread-detail">${imgTag(item.detail, t('spread.detailAlt'), { eager: true })}</div>
+        <p class="spread-detail-note">${esc(t('spread.detailNote'))}</p>` : ''}
 
-      ${item.about ? `<p class="spread-about">${esc(item.about)}</p>` : ''}
+      ${item.about ? `<p class="spread-about">${esc(localized(item, 'about'))}</p>` : ''}
 
       <div class="spread-specs">
-        ${specRow('Год', item.year)}
-        ${specRow('Материал', item.material)}
-        ${specRow('Размер', item.size)}
-        ${specRow('Тип', item.type)}
-        ${specRow('Цена', sold ? '—' : money(item.price))}
+        ${specRow(t('spread.year'), value(item.year))}
+        ${specRow(t('spread.material'), localized(item, 'material'))}
+        ${specRow(t('spread.size'), localized(item, 'size'))}
+        ${specRow(t('spread.type'), localized(item, 'type'))}
+        ${specRow(t('spread.price'), sold ? '—' : money(item.price))}
       </div>
 
       ${sold
-        ? `<p class="spread-sold">${esc(item.collection || 'Работа продана')}</p>`
+        ? `<p class="spread-sold">${esc(localized(item, 'collection', t('spread.soldDefault')))}</p>`
         : `<div class="spread-buy">
-             <button class="btn" data-add="${esc(item.id)}">В корзину — ${money(item.price)}</button>
-             <p class="spread-ship">Отправка из Москвы по всему миру</p>
+             <button class="btn" data-add="${esc(item.id)}">${esc(t('spread.addToCart'))} — ${money(item.price)}</button>
+             <p class="spread-ship">${esc(t('spread.shipping'))}</p>
            </div>`}
     </div>`;
 
@@ -426,16 +400,27 @@ const cart = {
             <img src="${esc(i.image.endsWith('.webp') ? i.image.replace(/\.webp$/, '-sm.webp') : i.image)}"
                  alt="" width="64" height="80" loading="lazy">
             <div>
-              <h4>${esc(i.title)}</h4>
-              <span class="cart-item-note">${esc([i.type, i.size].filter(Boolean).join(' · '))}</span>
-              <button class="cart-remove" data-remove="${esc(i.id)}">Убрать</button>
+              <h4>${esc(localized(i, 'title', t('messages.untitled')))}</h4>
+              <span class="cart-item-note">${esc([localized(i, 'type'), localized(i, 'size')].filter(Boolean).join(' · '))}</span>
+              <button class="cart-remove" data-remove="${esc(i.id)}">${esc(t('cart.remove'))}</button>
             </div>
             <span class="cart-item-price">${money(i.price)}</span>
           </div>`).join('')
-      : '<p class="cart-empty">Пока пусто. Выберите работу на стене.</p>';
+      : `<p class="cart-empty">${esc(t('cart.empty'))}</p>`;
 
     document.getElementById('cartTotal').textContent = money(this.total());
-    document.getElementById('cartCount').textContent = this.items.length ? `(${this.items.length})` : '';
+
+    const count = this.items.length;
+    const countElement = document.getElementById('cartCount');
+    const toggle = document.getElementById('cartToggle');
+    if (countElement) {
+      countElement.textContent = String(count);
+      countElement.hidden = count === 0;
+    }
+    toggle?.setAttribute(
+      'aria-label',
+      count ? t('cart.countLabel', { count }) : t('cart.emptyLabel')
+    );
 
     const order = document.getElementById('cartOrder');
     order.classList.toggle('is-disabled', !this.items.length);
@@ -446,19 +431,23 @@ const cart = {
   // Бэкенда у статического хостинга нет — заказ уходит письмом
   mailto() {
     const lines = this.items.map((i) =>
-      `— ${i.title} (${[i.type, i.size].filter(Boolean).join(', ')}) — ${money(i.price)}`);
+      t('mail.lineSeparator', {
+        title: localized(i, 'title', t('messages.untitled')),
+        details: [localized(i, 'type'), localized(i, 'size')].filter(Boolean).join(', '),
+        price: money(i.price)
+      }));
 
     const body = [
-      'Здравствуйте! Хочу оформить заказ:', '',
+      t('mail.greeting'), '',
       ...lines, '',
-      `Итого: ${money(this.total())}`, '',
-      'Имя:',
-      'Страна и город:',
-      'Адрес доставки:',
-      'Телефон:'
+      t('mail.total', { total: money(this.total()) }), '',
+      t('mail.name'),
+      t('mail.location'),
+      t('mail.address'),
+      t('mail.phone')
     ].join('\n');
 
-    return `mailto:${SHOP_EMAIL}?subject=${encodeURIComponent('Заказ — Ma chere Victoria')}&body=${encodeURIComponent(body)}`;
+    return `mailto:${SHOP_EMAIL}?subject=${encodeURIComponent(t('mail.subject'))}&body=${encodeURIComponent(body)}`;
   }
 };
 
@@ -469,6 +458,10 @@ function initCart() {
   const overlay = document.getElementById('cartOverlay');
   const toggle = document.getElementById('cartToggle');
   if (!panel || !toggle) return;
+
+  toggle.dataset.badgePosition = ['top-right', 'bottom-right'].includes(CART_BADGE_POSITION)
+    ? CART_BADGE_POSITION
+    : 'top-right';
 
   setCartOpen = (open) => {
     panel.classList.toggle('is-open', open);
@@ -505,7 +498,7 @@ function initDelegation() {
     if (add) {
       const ok = cart.add(add.dataset.add);
       const original = add.textContent;
-      add.textContent = ok ? 'Добавлено в корзину' : 'Уже в корзине';
+      add.textContent = ok ? t('messages.added') : t('messages.alreadyInCart');
       add.classList.add('btn-added');
       setTimeout(() => {
         add.textContent = original;

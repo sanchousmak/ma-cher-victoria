@@ -52,8 +52,6 @@
   object-position: center;
 }
 
-.canvas-container .main-painting { object-fit: contain; background: var(--bg); }
-
 /* Вуаль: середина открыта, края уходят в белый */
 .about-bg::after {
   content: '';
@@ -200,20 +198,6 @@
 /* Текст внутри записки остаётся по левому краю */
 .about-note-layout { text-align: left; }
 
-/* --------------------------------------------------------------------------
-   ВЕНЗЕЛЬ НА ОБЛОЖКЕ
-   Внизу первого экрана, по центру — уводит взгляд вниз, к прокрутке.
-   -------------------------------------------------------------------------- */
-.hero-vensel {
-  position: absolute;
-  bottom: clamp(60px, 12vh, 140px);
-  left: 50%;
-  transform: translateX(-50%);
-  width: clamp(200px, 26vw, 420px);
-  height: auto;
-  z-index: 3;
-  pointer-events: none;
-}
 .series.is-left img.series-heading { padding-left: clamp(30px, 4vw, 70px); }
 .series-stage { height: 34vw !important; max-height: 620px !important; }
 .series-piece { max-width: none !important; }
@@ -291,7 +275,12 @@ img.series-heading {
   letter-spacing: 0.02em;
 }
 
-.manifesto-text { max-width: none; }
+.manifesto-text {
+  max-width: none;
+  margin-inline: auto;
+  text-align: justify;
+}
+.manifesto-text p { margin-inline: auto; }
 .manifesto-center { padding: clamp(30px, 5vw, 90px) clamp(12px, 1.5vw, 28px) 0; }
 .manifesto-title { font-size: clamp(38px, 5.2vw, 92px); }
 
@@ -351,13 +340,6 @@ img.series-heading {
    ПРАВКИ ПО РЕВЬЮ
    ========================================================================== */
 
-/* --- 1. Обложка: надпись не должна срезаться --- */
-.canvas-container .main-painting {
-  object-fit: contain;
-  object-position: center;
-  background: var(--bg);
-}
-
 /* --- 2. Три размера на весь сайт --- */
 :root {
   --fs-lg: clamp(28px, 3.4vw, 58px);
@@ -402,7 +384,7 @@ img.series-heading {
 
 /* Вопросы не липнут к краю экрана */
 .series-question {
-  padding: 0 clamp(20px, 3vw, 48px);
+  padding: 0 clamp(20px, 3vw, 48px) clamp(12px, 2vw, 36px);
   margin-top: clamp(20px, 2.5vw, 36px);
 }
 
@@ -426,8 +408,7 @@ img.series-heading {
 
 .contact-link { border-bottom: 1px solid currentColor; padding-bottom: 2px; }
 
-.cv-card::after {
-  content: '↓ Скачать';
+.cv-card-download {
   display: block;
   font-family: var(--font-body);
   font-size: var(--fs-sm);
@@ -457,4 +438,198 @@ img.series-heading {
   color: var(--text-soft);
   margin-top: 36px;
   max-width: 60ch;
+}
+
+/* Манифест: desktop-композиция по референсу. Мобильная раскладка выше не меняется. */
+@media (min-width: 1101px) {
+  .manifesto .series-stage {
+    width: min(34vw, 652.8px) !important;
+    height: auto !important;
+    aspect-ratio: 544 / 735 !important;
+    max-height: none !important;
+    margin-bottom: 0 !important;
+  }
+
+  .manifesto .series-question {
+    width: min(34vw, 652.8px) !important;
+    box-sizing: border-box;
+    margin-top: 42px !important;
+  }
+
+  .manifesto .series.is-right .series-stage,
+  .manifesto .series.is-right .series-question {
+    margin-left: auto;
+  }
+
+  .manifesto .series-piece {
+    max-width: none !important;
+  }
+
+  .manifesto .series-circle {
+    z-index: 0 !important;
+  }
+
+  .manifesto img.series-heading {
+    position: relative !important;
+    top: min(3.125vw, 60px) !important;
+    width: min(24vw, 460.8px) !important;
+    max-width: none !important;
+    z-index: 6 !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p1 {
+    left: -13% !important;
+    right: auto !important;
+    top: 46.9% !important;
+    width: 52.1% !important;
+    z-index: 1 !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p2 {
+    left: 17% !important;
+    right: auto !important;
+    top: 27.4286% !important;
+    width: 52.6% !important;
+    z-index: 2 !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p3 {
+    left: 47% !important;
+    right: auto !important;
+    top: 69.2245% !important;
+    width: 30.2941% !important;
+    z-index: 4 !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p4 {
+    left: -2% !important;
+    right: auto !important;
+    top: 19.5918% !important;
+    width: 22.7% !important;
+    z-index: 3 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p1 {
+    left: auto !important;
+    right: -24% !important;
+    top: 16.3265% !important;
+    width: 64.2% !important;
+    z-index: 1 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p2 {
+    left: auto !important;
+    right: 31% !important;
+    top: 22.2041% !important;
+    width: 33.8235% !important;
+    z-index: 2 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p3 {
+    left: auto !important;
+    right: -20% !important;
+    top: 18.9388% !important;
+    width: 55.8824% !important;
+    z-index: 3 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p4 {
+    left: auto !important;
+    right: -5% !important;
+    top: 47.0204% !important;
+    width: 58.8235% !important;
+    z-index: 4 !important;
+  }
+
+}
+
+/* Мобильная раскладка: тот же фиксированный canvas, порядок — манифест,
+   левая серия, правая серия. Заголовки серий сохраняют мобильную логику. */
+@media (max-width: 1100px) {
+  .manifesto .manifesto-center { order: -1; }
+  .manifesto .series.is-left { order: 0; left: -6%;}
+  .manifesto .series.is-right { order: 1; right: -6%; }
+  .manifesto img.series-heading { width: clamp(250px, 17vw, 320px); }
+
+  .manifesto .series-stage {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 544 / 735 !important;
+    max-height: none !important;
+    margin-bottom: 0 !important;
+  }
+
+  .manifesto .series-question {
+    width: 100% !important;
+    box-sizing: border-box;
+    margin-top: 42px !important;
+  }
+
+  .manifesto .series-piece {
+    max-width: none !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p1 {
+    left: -13% !important;
+    right: auto !important;
+    top: 46.9% !important;
+    width: 52.1% !important;
+    z-index: 1 !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p2 {
+    left: 17% !important;
+    right: auto !important;
+    top: 27.4286% !important;
+    width: 52.6% !important;
+    z-index: 2 !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p3 {
+    left: 47% !important;
+    right: auto !important;
+    top: 69.2245% !important;
+    width: 30.2941% !important;
+    z-index: 4 !important;
+  }
+
+  .manifesto .series.is-left .series-piece.p4 {
+    left: -2% !important;
+    right: auto !important;
+    top: 19.5918% !important;
+    width: 22.7% !important;
+    z-index: 3 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p1 {
+    left: auto !important;
+    right: -24% !important;
+    top: 16.3265% !important;
+    width: 64.2% !important;
+    z-index: 1 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p2 {
+    left: auto !important;
+    right: 31% !important;
+    top: 22.2041% !important;
+    width: 33.8235% !important;
+    z-index: 2 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p3 {
+    left: auto !important;
+    right: -20% !important;
+    top: 18.9388% !important;
+    width: 55.8824% !important;
+    z-index: 3 !important;
+  }
+
+  .manifesto .series.is-right .series-piece.p4 {
+    left: auto !important;
+    right: -5% !important;
+    top: 47.0204% !important;
+    width: 58.8235% !important;
+    z-index: 4 !important;
+  }
 }

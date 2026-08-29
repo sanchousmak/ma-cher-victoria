@@ -1,0 +1,8 @@
+{
+  "name": "ma-cher-victoria",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  }
+}

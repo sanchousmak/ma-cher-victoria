@@ -1,238 +1,28 @@
-<!DOCTYPE html>
+<!-- GENERATED FILE — edit src/index.template.html, src/404.template.html, and src/locales/*.json, then run npm run build. -->
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>Ma chere Victoria</title>
-    <meta name="description" content="Виктория — художница. Манифест, серия работ и лавка: оригиналы и печатные тиражи.">
-    <link rel="stylesheet" href="css/type.css?v=39">
-    <link rel="stylesheet" href="css/style.css?v=39">
-    <link rel="stylesheet" href="css/motion.css?v=39">
-    <link rel="stylesheet" href="css/shop.css?v=39">
-    <link rel="stylesheet" href="css/manifesto.css?v=39">
-    <link rel="stylesheet" href="css/about.css?v=39">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-    <link rel="preload" href="fonts/cd-masvol-thin.otf" as="font" type="font/otf" crossorigin>
-    <script src="js/gallery.js" defer></script>
-    <script src="js/script.js" defer></script>
-    <script src="js/motion.js?v=39" defer></script>
-    <link rel="icon" href="media/favicon.png" type="image/png">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ma chere Victoria</title>
+  <meta http-equiv="refresh" content="0; url=ru/">
+  <link rel="canonical" href="https://macherevictoria.artalbom-graf.com/">
 </head>
 <body>
-
-    <header class="site-header">
-        <a href="#hero" class="menu-logo">Ma chere Victoria</a>
-
-        <nav class="menu" id="mainMenu">
-            <a href="#about">Обо мне</a>
-            <a href="#manifesto">Манифест</a>
-            <a href="#manifesto">Серия работ</a>
-            <a href="#shop">Лавка</a>
-            <a href="#contacts">Контакты</a>
-        </nav>
-
-        <div class="header-right">
-            <div class="lang-switcher">
-                <a href="#" class="lang-link active">RU</a>
-                <span class="lang-divider">/</span>
-                <a href="#" class="lang-link">EN</a>
-            </div>
-            <button class="cart-toggle" id="cartToggle" hidden>
-                Корзина <span class="cart-count" id="cartCount"></span>
-            </button>
-        </div>
-
-        <button class="nav-toggle" aria-expanded="false" aria-controls="mainMenu" aria-label="Открыть меню"></button>
-    </header>
-
-    <main class="layout">
-        <section class="hero-canvas" id="hero">
-            <div class="canvas-container">
-            <h1 class="visually-hidden">Виктория — художник. Живопись, графика, иллюстрация</h1>
-                <img class="hero-vensel" src="media/vensel.png" alt="">
-                <img src="media/main-v.png" alt="Виктория" class="main-painting"
-                
-                    fetchpriority="high" decoding="async" id="heroImage">
-            </div>
-        </section>
-
-        <!-- ==========================================================================
-     БЛОК 1 — ОБО МНЕ
-     ========================================================================== -->
-
-        <section id="about" class="about-scene">
-            <div class="about-bg">
-                <img src="media/background_obomne.png" alt="">
-            </div>
-
-            <div class="about-scene-inner">
-                <h2 class="about-heading" data-reveal="up" data-delay="80">ПРО МЕНЯ</h2>
-
-                <div class="about-note-layout">
-                    <div class="about-portrait is-left" data-reveal="left" data-delay="200">
-                    </div>
-
-                    <div class="note" data-reveal="up" data-delay="350">
-                        <p>Моё имя Виктория. Я художник. В своих работах я отталкиваюсь от себя. Мне интересен эффект привычного, бытового и понятного. Как человека формирует что-то простое и красивое.</p>
-                        <p>Моё кредо в искусстве — приумножать прекрасное вокруг меня. Когда все вокруг ищут новые смыслы — я хочу разобраться со старыми.</p>
-                        <span class="note-sign">Виктория</span>
-                    </div>
-
-                    <div class="about-portrait is-right" data-reveal="right" data-delay="200">
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-
-        <section id="manifesto" class="manifesto">
-            <div class="manifesto-grid">
-
-                <!-- ЛЕВАЯ СЕРИЯ — BLUE ROOM -->
-                <div class="series is-left" data-reveal="left" data-delay="150">
-                    <div class="series-stage">
-                        <img class="series-circle" src="media/blue_circle.png" alt="">
-                        <img class="series-heading" src="media/blue_room_heading_rus.png" alt="Blue Room">
-
-                        <img class="series-piece p1" src="media/blue_room_piece_1.png" alt="" loading="lazy">
-                        <img class="series-piece p2" src="media/blue_room_piece_2.png" alt="" loading="lazy">
-                        <img class="series-piece p3" src="media/blue_room_piece_3.png" alt="" loading="lazy">
-                        <img class="series-piece p4" src="media/blue_room_piece_4.png" alt="" loading="lazy">
-                    </div>
-
-                    <p class="series-question">
-                        Как бытовое пространство из интимного превращается в одиночество?
-                        Где начинается единение с собой? Когда ванная комната перестаёт
-                        быть обычной и повседневной?
-                    </p>
-                    <span class="series-hint">Наведите, чтобы раскрыть</span>
-                </div>
-
-                <!-- ЦЕНТР -->
-                <div class="manifesto-center">
-                    <span class="section-number">02 — Манифест</span>
-                    <h2 class="manifesto-title" data-reveal="up">Artist<br>Statement</h2>
-
-                    <div class="manifesto-text typed">
-                        <p data-reveal="up" data-delay="120">
-                            В моей художественной практике я работаю с темой опыта переживания.
-                        </p>
-                        <p data-reveal="up" data-delay="220">
-                            Выбирая техники классической живописи и графики я обращаюсь
-                            к бытовым сюжетам, которые обостряю новым взглядом на привычные вещи.
-                        </p>
-                        <p data-reveal="up" data-delay="320">
-                            Большую роль в моих работах имеет текст, инсталляция, работа
-                            с целой серией. Мои интересы сосредоточены вокруг театрального
-                            жеста, анимационного движения, документальности гравюры.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- ПРАВАЯ СЕРИЯ — ПРЕДЧУВСТВИЕ -->
-                <div class="series is-right" data-reveal="right" data-delay="150">
-                    <div class="series-stage">
-                        <img class="series-circle" src="media/yellow_circle.png" alt="">
-                        <img class="series-heading" src="media/yellow_heading_rus.png" alt="Предчувствие">
-                        <img class="series-piece p1" src="media/yellow_piece_1.png" alt="" loading="lazy">
-                        <img class="series-piece p2" src="media/yellow_piece_2.png" alt="" loading="lazy">
-                        <img class="series-piece p3" src="media/yellow_piece_3.png" alt="" loading="lazy">
-                        <img class="series-piece p4" src="media/yellow_piece_4.png" alt="" loading="lazy">
-                    </div>
-
-                    <p class="series-question">
-                        Записные книжки, обрывки фраз и осколки воспоминаний.
-                        Почему мы собираем физическую память? Что остаётся в конце
-                        от того, что мы увидели и запомнили?
-                    </p>
-                    <span class="series-hint">Наведите, чтобы раскрыть</span>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- ЛАВКА: тёмная стена, работы на гвоздях, проданные оставляют след -->
-        <section id="shop" class="section section-wall">
-            <div class="wall-inner">
-                <div class="wall-head">
-                    <span class="section-number">04 — Лавка</span>
-                    <h2>Стена</h2>
-                    <p class="section-intro">Работы, которые можно унести домой. Проданные остаются на стене — гвоздём и невыгоревшим следом.</p>
-                </div>
-
-                <div class="filters" id="shopFilters">
-                    <button class="tab-btn active" data-filter="all">Всё</button>
-                    <button class="tab-btn" data-filter="original">Оригиналы</button>
-                    <button class="tab-btn" data-filter="print">Принты</button>
-                </div>
-
-                <div class="wall-rail"></div>
-                <div id="shopWall" class="wall"></div>
-
-                <div class="wall-terms">
-                    <p class="shop-note"><strong>Отправка</strong>Из Москвы по всему миру. Оригиналы — в жёстком тубусе или коробе.</p>
-                    <p class="shop-note"><strong>Сроки</strong>Россия 3–7 дней, международная 10–21 день.</p>
-                    <p class="shop-note"><strong>Оплата</strong>Обсуждаем в переписке — перевод или карта.</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="contacts" class="section">
-                <span class="section-number">05 — Контакты</span>
-    <h2>Связаться</h2>
-
-    <div class="contacts-wrapper">
-        <div>
-            <a href="mailto:victtoress@mail.com" class="contact-link">Email</a>
-            <span class="contact-alt">victtoress@mail.com</span>
-        </div>
-
-        <div>
-            <a href="https://www.instagram.com/macherevictoria" target="_blank" rel="noopener" class="contact-link">Instagram<sup>*</sup></a>
-            <span class="contact-alt">@macherevictoria</span>
-        </div>
-    </div>
-
-    <!-- Визитка CV: физический объект, а не ссылка в списке -->
-    <a class="cv-card" href="media/cv.pdf" download="cv-victoria.pdf">
-        <span class="cv-card-name">Victoria</span>
-        <span class="cv-card-role">Artist · Moscow</span>
-        <span class="cv-card-hint">CV — PDF</span>
-    </a>
-
-    <p class="legal-note">* Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории Российской Федерации.</p>
-</section>
-    </main>
-
-    <!-- Разворот работы -->
-    <div class="spread" id="spread" aria-hidden="true" role="dialog" aria-label="Работа">
-        <button class="spread-close">Закрыть</button>
-        <div class="spread-inner"></div>
-    </div>
-
-    <!-- Корзина -->
-    <div class="cart-overlay" id="cartOverlay"></div>
-
-    <aside class="cart-panel" id="cartPanel" aria-hidden="true" aria-label="Корзина">
-        <div class="cart-head">
-            <h3>Корзина</h3>
-            <button class="cart-close" aria-label="Закрыть корзину">&times;</button>
-        </div>
-
-        <div class="cart-body" id="cartBody"></div>
-
-        <div class="cart-foot">
-            <div class="cart-total">
-                <span>Итого</span>
-                <b id="cartTotal">0 ₽</b>
-            </div>
-            <a class="btn btn-solid" id="cartOrder" href="#">Отправить заказ</a>
-            <p class="cart-hint">Откроется письмо со списком работ. Доставку и оплату согласуем в переписке.</p>
-        </div>
-    </aside>
-
+  <main>
+    <p><a href="ru/">Русская версия</a> / <a href="en/">English version</a></p>
+    <noscript><p><a href="ru/">Продолжить на русском</a></p></noscript>
+  </main>
+  <script>
+    (() => {
+      let saved = '';
+      try { saved = localStorage.getItem('mcv-locale') || ''; } catch (_) {}
+      const target = saved === 'en' ? 'en/' : 'ru/';
+      const url = new URL(target, location.href);
+      url.search = location.search;
+      url.hash = location.hash;
+      location.replace(url.href);
+    })();
+  </script>
 </body>
 </html>

@@ -54,16 +54,16 @@
 /* Цветной ореол за стопкой */
 .series-circle {
   position: absolute;
-  top: 4%;
-  width: 116%;
+  top: -6%;
+  width: 170%;
   height: auto;
   z-index: 0;
   opacity: .85;
   pointer-events: none;
 }
 
-.series.is-left  .series-circle { left: -22%; }
-.series.is-right .series-circle { right: -22%; }
+.series.is-left  .series-circle { left: -60%; }
+.series.is-right .series-circle { right: -60%; }
 
 /* Название серии */
 .series-heading {
@@ -165,7 +165,75 @@
 .series.is-left  .series-question { color: #4A46D6; }
 .series.is-right .series-question { color: #B0803A; text-align: right; }
 
-.series-hint { display: none; }
+.series-link {
+  display: block;
+  position: relative;
+  z-index: 1;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform var(--transition);
+}
+
+.series.is-left .series-link { color: #4A46D6; }
+.series.is-right .series-link { color: #B0803A; }
+
+.series-link:hover { transform: translateY(-2px); }
+
+.series-link:hover .series-piece {
+  filter: drop-shadow(0 14px 30px rgba(40, 34, 37, .24));
+}
+
+.series-link:active { transform: translateY(0) scale(.995); }
+
+.series-link:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 8px;
+}
+
+.series-hint {
+  display: block;
+  position: relative;
+  z-index: 4;
+  margin: 10px clamp(12px, 2vw, 32px) 0;
+  color: inherit;
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: .14em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  font-feature-settings: "calt" 1, "rand" 1;
+  opacity: 1;
+  text-decoration-line: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-color var(--transition);
+}
+
+.series-link:hover .series-hint,
+.series-link:focus-visible .series-hint { text-decoration-color: currentColor; }
+
+.series.is-left .series-hint::before {
+  content: '←';
+  display: inline-block;
+  margin-right: .55em;
+  font-family: inherit;
+  letter-spacing: normal;
+}
+
+.series.is-right .series-hint::after {
+  content: '→';
+  display: inline-block;
+  margin-left: .55em;
+  font-family: inherit;
+  letter-spacing: normal;
+}
+
+.series.is-right .series-hint {
+  color: #6B4F24;
+  text-align: right;
+}
 
 /* --------------------------------------------------------------------------
    ПЛАНШЕТ И ТЕЛЕФОН
@@ -182,15 +250,18 @@
   .series { max-width: 500px; margin: 0 auto; }
 
   .series.is-right .series-heading,
-  .series.is-right .series-question { text-align: left; }
+  .series.is-right .series-question,
+  .series.is-right .series-hint { text-align: left; }
 
-  .series-circle { width: 108%; }
-  .series.is-left  .series-circle { left: -4%; }
-  .series.is-right .series-circle { right: -4%; }
+  .series-circle { top: -19%; width: 221%; }
+  .series.is-left  .series-circle { left: -93%; }
+  .series.is-right .series-circle { right: -97%; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .series-piece { animation: none; }
+  .series-link,
+  .series-hint { transition: none; }
 }
 /* --------------------------------------------------------------------------
    ЖЁСТКОЕ ОГРАНИЧЕНИЕ РАЗМЕРОВ
